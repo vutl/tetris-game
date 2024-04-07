@@ -165,13 +165,13 @@ void Game::LockBlock()
         gameOver = true;
     }
     nextBlock = GetRandomBlock();
+
     int rowsCleared = grid.ClearFullRows();
     if (rowsCleared > 0)
     {
         PlaySound(clearSound);
         UpdateScore(rowsCleared, 0);
     }
-
 }
 
 bool Game::BlockFits()
