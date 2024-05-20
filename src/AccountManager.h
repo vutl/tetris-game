@@ -1,10 +1,11 @@
 #pragma once
 #include "Account.h"
-#include "UserAccount.h"
 #include "AdminAccount.h"
 #include <vector>
 #include <string>
 #include <fstream>
+
+class UserAccount;
 
 class AccountManager {
 private:
@@ -15,7 +16,7 @@ private:
 public:
     ~AccountManager();
     void createAccount(const std::string& type, const std::string& username, const std::string& password);
-    Account* findAccount(const std::string& username, const std::string& password);
+    Account* findAccount(const std::string& username);
     void displayAccounts() const;
     void deleteAccount(const std::string& username, const std::string& requestingUserType);
 

@@ -4,6 +4,7 @@
 #include "game.h"
 #include "colors.h"
 #include "AccountManager.h"
+#include "UserAccount.h"
 
 using namespace std;
 
@@ -45,14 +46,9 @@ int main() {
                 getline(cin, username);
                 cout << "Enter password: ";
                 getline(cin, password);
-                Account* account = accountManager.findAccount(username, password);
+                Account* account = accountManager.findAccount(username);
                 if (account != nullptr) {
                     displayLoginMenu(*account, accountManager);
-                    // if (account->getType() == "user") {
-                    //     displayUserLoginMenu(*account, accountManager);
-                    // } else if (account->getType() == "admin") {
-                    //     displayAdminLoginMenu(*account, accountManager);
-                    // }
                 } else {
                     cout << "Invalid username or password.\n";
                 }
@@ -70,16 +66,13 @@ int main() {
                 break;
             }
             case '3':
-                accountManager.displayAccounts();
-                break;
-            case '4':
                 cout << "Exiting program.\n";
                 break;
             default:
                 cout << "Invalid choice. Please try again.\n";
                 break;
         }
-    } while (choice != '4');
+    } while (choice != '3');
 
     accountManager.saveAccounts("accounts.txt");
 
@@ -90,8 +83,7 @@ void displayMainMenu() {
     cout << "\n=== Main Menu ===\n";
     cout << "1. Login\n";
     cout << "2. Create Account\n";
-    cout << "3. Display Accounts\n";
-    cout << "4. Exit\n";
+    cout << "3. Exit\n";
     cout << "Choose an option: ";
 }
 
@@ -104,69 +96,94 @@ void displayLoginMenu(Account& account, AccountManager& accountManager) {
 }
 
 void displayUserLoginMenu(Account& account, AccountManager& accountManager) {
+    UserAccount* userAccount = dynamic_cast<UserAccount*>(&account);
+    string friendUsername;
+    int points;
     int choice;
     do {
-        // Display user-specific menu options
-        std::cout << "\n=== Welcome, " << account.getUsername() << " ===\n";
-        std::cout << "Choose an option:\n";
-        std::cout << "1. Play Tetris\n";
-        std::cout << "2. Display Score\n";
-        std::cout << "3. Logout\n";
-        std::cout << "Choose an option: ";
-        std::cin >> choice;
+        cout << "\n=== Welcome, " << account.getUsername() << " ===\n";
+        cout << "Choose an option:\n";
+        cout << "1. Play Tetris\n";
+        cout << "2. Display Score\n";
+        cout << "3. Display Friends\n";
+        cout << "4. Add Friend\n";
+        cout << "5. Share Points\n";
+        cout << "6. Logout\n";
+        cout << "Choose an option: ";
+        cin >> choice;
 
         switch (choice) {
             case 1:
                 playTetris(account);
                 break;
             case 2:
-                std::cout << "Your score: " << account.getScore() << std::endl;
+                cout << "Your score: " << account.getScore() << endl;
                 break;
             case 3:
-                std::cout << "Logging out.\n";
+                if (userAccount) {
+                    userAccount->displayFriends();
+                }
+                break;
+            case 4:
+                cout << "Enter friend's username: ";
+                cin >> friendUsername;
+                if (userAccount) {
+                    userAccount->addFriend(friendUsername, accountManager);
+                }
+                break;
+            case 5:
+                cout << "Enter friend's username: ";
+                cin >> friendUsername;
+                cout << "Enter points to share: ";
+                cin >> points;
+                if (userAccount) {
+                    userAccount->sharePoints(friendUsername, points, accountManager);
+                }
+                break;
+            case 6:
+                cout << "Logging out.\n";
                 break;
             default:
-                std::cout << "Invalid choice. Please try again.\n";
+                cout << "Invalid choice. Please try again.\n";
                 break;
         }
-    } while (choice != 3);
+    } while (choice != 6);
 }
 
 void displayAdminLoginMenu(Account& account, AccountManager& accountManager) {
     int choice;
-    std::string usernameToDelete;
+    string usernameToDelete;
     do {
-        // Display admin-specific menu options
-        std::cout << "\n=== Welcome, " << account.getUsername() << " (Admin) ===\n";
-        std::cout << "Choose an option:\n";
-        std::cout << "1. Play Tetris\n";
-        std::cout << "2. Display Score\n";
-        std::cout << "3. View All Accounts\n";
-        std::cout << "4. Delete Account\n";
-        std::cout << "5. Logout\n";
-        std::cout << "Choose an option: ";
-        std::cin >> choice;
+        cout << "\n=== Welcome, " << account.getUsername() << " (Admin) ===\n";
+        cout << "Choose an option:\n";
+        cout << "1. Play Tetris\n";
+        cout << "2. Display Score\n";
+        cout << "3. View All Accounts\n";
+        cout << "4. Delete Account\n";
+        cout << "5. Logout\n";
+        cout << "Choose an option: ";
+        cin >> choice;
 
         switch (choice) {
             case 1:
                 playTetris(account);
                 break;
             case 2:
-                std::cout << "Your score: " << account.getScore() << std::endl;
+                cout << "Your score: " << account.getScore() << endl;
                 break;
             case 3:
                 accountManager.displayAccounts();
                 break;
             case 4:
-                std::cout << "Enter username to delete: ";
-                std::cin >> usernameToDelete;
+                cout << "Enter username to delete: ";
+                cin >> usernameToDelete;
                 accountManager.deleteAccount(usernameToDelete, "admin");
                 break;
             case 5:
-                std::cout << "Logging out.\n";
+                cout << "Logging out.\n";
                 break;
             default:
-                std::cout << "Invalid choice. Please try again.\n";
+                cout << "Invalid choice. Please try again.\n";
                 break;
         }
     } while (choice != 5);

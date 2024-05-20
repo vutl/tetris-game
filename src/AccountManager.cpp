@@ -1,6 +1,7 @@
 #include "AccountManager.h"
 #include <iostream>
 #include <algorithm>
+#include "UserAccount.h"
 
 AccountManager::~AccountManager() {
     for (Account* account : accounts) {
@@ -14,7 +15,10 @@ Account* AccountManager::createAccountFromType(const std::string& type, const st
     } else if (type == "AdminAccount") {
         return new AdminAccount(username, password);
     }
-    return nullptr;
+    else {
+        std::cout << "Invalid choice. Choose again!" << std::endl;
+        return nullptr;
+    }
 }
 
 void AccountManager::createAccount(const std::string& type, const std::string& username, const std::string& password) {
@@ -27,9 +31,9 @@ void AccountManager::createAccount(const std::string& type, const std::string& u
     }
 }
 
-Account* AccountManager::findAccount(const std::string& username, const std::string& password) {
+Account* AccountManager::findAccount(const std::string& username) {
     for (Account* account : accounts) {
-        if (account->getUsername() == username && account->getPassword() == password) {
+        if (account->getUsername() == username) {
             return account;
         }
     }
@@ -47,8 +51,8 @@ void AccountManager::displayAccounts() const {
     }
 }
 
-void AccountManager::deleteAccount(const std::string& username, const std::string& requestingUserType) {
-    if (requestingUserType != "admin") {
+void AccountManager::deleteAccount(const std::string& username, const std::string& type) {
+    if (type != "admin") {
         std::cout << "Only admin accounts can delete accounts." << std::endl;
         return;
     }
