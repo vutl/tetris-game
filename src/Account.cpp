@@ -1,6 +1,6 @@
 #include "Account.h"
 
-Account::Account(std::string u, std::string p) : username(u), password(p), score(0) {}
+Account::Account(std::string u, std::string p, std::string t) : username(u), password(p), score(0), type(t) {}
 
 std::string Account::getUsername() const {
     return username;
@@ -12,6 +12,10 @@ std::string Account::getPassword() const {
 
 int Account::getScore() const {
     return score;
+}
+
+std::string Account::getType() const {
+    return type;
 }
 
 void Account::updateScore(int points) {
