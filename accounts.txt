@@ -1,2 +1,0 @@
-User vutl 1 0 0
-User vutl2 1 0 0
