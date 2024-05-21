@@ -56,12 +56,21 @@ int main() {
             }
             case '2': {
                 string type, username, password;
-                cout << "\nEnter account type (UserAccount, AdminAccount): ";
-                getline(cin, type);
+                do {
+                    cout << "\nEnter account type (User, Admin): ";
+                    getline(cin, type);
+                    cout << "Invalid account type: " << endl;
+                } while (type != "User" && type != "Admin" && type != "admin" && type != "user" );
                 cout << "Enter desired username: ";
                 getline(cin, username);
                 cout << "Enter password: ";
                 getline(cin, password);
+                if (type == "User" || type == "user") {
+                    type = "User";
+                }
+                else if (type == "Admin" || type == "admin") {
+                    type = "Admin";
+                }
                 accountManager.createAccount(type, username, password);
                 break;
             }

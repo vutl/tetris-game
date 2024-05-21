@@ -10,9 +10,9 @@ AccountManager::~AccountManager() {
 }
 
 Account* AccountManager::createAccountFromType(const std::string& type, const std::string& username, const std::string& password) {
-    if (type == "UserAccount") {
+    if (type == "User") {
         return new UserAccount(username, password);
-    } else if (type == "AdminAccount") {
+    } else if (type == "Admin") {
         return new AdminAccount(username, password);
     }
     else {
@@ -92,9 +92,13 @@ void AccountManager::loadAccounts(const std::string& filename) {
 
     std::string type;
     while (file >> type) {
+        std::string line;
+        std::getline(file, line);
+        std::istringstream iss(line);
+
         Account* account = createAccountFromType(type, "", "");
         if (account) {
-            account->loadFromFile(file);
+            account->loadFromFile(iss);
             accounts.push_back(account);
         }
     }

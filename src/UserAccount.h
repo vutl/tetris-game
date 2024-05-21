@@ -6,6 +6,8 @@
 class AccountManager;
 
 class UserAccount : public Account, public FriendsAccount {
+protected:
+    int numFriends;
 public:
     UserAccount(std::string u, std::string p);
     void saveToFile(std::ostream& os) const override;

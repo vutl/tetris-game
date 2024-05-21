@@ -1,3 +1,0 @@
-UserAccount vutl 1 20
-AdminAccount admin 1 0
-UserAccount vutl2 1 1
