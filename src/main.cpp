@@ -108,7 +108,7 @@ void displayUserLoginMenu(Account& account, AccountManager& accountManager) {
     UserAccount* userAccount = dynamic_cast<UserAccount*>(&account);
     string friendUsername;
     int points;
-    int choice;
+    char choice;
     do {
         cout << "\n=== Welcome, " << account.getUsername() << " ===\n";
         cout << "Choose an option:\n";
@@ -122,25 +122,25 @@ void displayUserLoginMenu(Account& account, AccountManager& accountManager) {
         cin >> choice;
 
         switch (choice) {
-            case 1:
+            case '1':
                 playTetris(account);
                 break;
-            case 2:
+            case '2':
                 cout << "Your score: " << account.getScore() << endl;
                 break;
-            case 3:
+            case '3':
                 if (userAccount) {
                     userAccount->displayFriends();
                 }
                 break;
-            case 4:
+            case '4':
                 cout << "Enter friend's username: ";
                 cin >> friendUsername;
                 if (userAccount) {
                     userAccount->addFriend(friendUsername, accountManager);
                 }
                 break;
-            case 5:
+            case '5':
                 cout << "Enter friend's username: ";
                 cin >> friendUsername;
                 cout << "Enter points to share: ";
@@ -149,18 +149,18 @@ void displayUserLoginMenu(Account& account, AccountManager& accountManager) {
                     userAccount->sharePoints(friendUsername, points, accountManager);
                 }
                 break;
-            case 6:
+            case '6':
                 cout << "Logging out.\n";
                 break;
             default:
                 cout << "Invalid choice. Please try again.\n";
                 break;
         }
-    } while (choice != 6);
+    } while (choice != '6');
 }
 
 void displayAdminLoginMenu(Account& account, AccountManager& accountManager) {
-    int choice;
+    char choice;
     string usernameToDelete;
     do {
         cout << "\n=== Welcome, " << account.getUsername() << " (Admin) ===\n";
@@ -174,28 +174,28 @@ void displayAdminLoginMenu(Account& account, AccountManager& accountManager) {
         cin >> choice;
 
         switch (choice) {
-            case 1:
+            case '1':
                 playTetris(account);
                 break;
-            case 2:
+            case '2':
                 cout << "Your score: " << account.getScore() << endl;
                 break;
-            case 3:
+            case '3':
                 accountManager.displayAccounts();
                 break;
-            case 4:
+            case '4':
                 cout << "Enter username to delete: ";
                 cin >> usernameToDelete;
                 accountManager.deleteAccount(usernameToDelete, "admin");
                 break;
-            case 5:
+            case '5':
                 cout << "Logging out.\n";
                 break;
             default:
                 cout << "Invalid choice. Please try again.\n";
                 break;
         }
-    } while (choice != 5);
+    } while (choice != '5');
 }
 
 void playTetris(Account& account) {
