@@ -4,7 +4,7 @@
 UserAccount::UserAccount(std::string u, std::string p) : Account(u, p, "user"), numFriends(0) {}
 
 void UserAccount::saveToFile(std::ostream& os) const {
-    os << "UserAccount " << username << " " << password << " " << score << " ";
+    os << "User " << username << " " << password << " " << score << " ";
     os << friends.size();
     for (const std::string& friendUsername : friends) {
         os << " " << friendUsername;

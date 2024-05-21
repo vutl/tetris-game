@@ -57,9 +57,8 @@ int main() {
             case '2': {
                 string type, username, password;
                 do {
-                    cout << "\nEnter account type (User, Admin): ";
+                    cout << "\nEnter valid account type (User, Admin): ";
                     getline(cin, type);
-                    cout << "Invalid account type: " << endl;
                 } while (type != "User" && type != "Admin" && type != "admin" && type != "user" );
                 cout << "Enter desired username: ";
                 getline(cin, username);
