@@ -52,7 +52,7 @@ void AccountManager::displayAccounts() const {
 }
 
 void AccountManager::deleteAccount(const std::string& username, const std::string& type) {
-    if (type != "admin") {
+    if (type != "Admin") {
         std::cout << "Only admin accounts can delete accounts." << std::endl;
         return;
     }
